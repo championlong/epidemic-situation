@@ -1,6 +1,8 @@
 <template>
   <div v-title data-title="ForFun Find Yourself">
-    <masp></masp>
+
+    <demo></demo>
+
     <el-container>
 
       <el-main class="me-articles">
@@ -30,7 +32,7 @@
   import CardArticle from '@/components/card/CardArticle'
   import CardArchive from '@/components/card/CardArchive'
   import CardTag from '@/components/card/CardTag'
-  import Masp from '@/components/map_index'
+  import demo from '@/components/map_index'
 
   import ArticleScrollPage from '@/views/common/ArticleScrollPage'
 
@@ -105,7 +107,7 @@
       'card-me': CardMe,
       'card-article': CardArticle,
       'card-tag': CardTag,
-      'masp':Masp,
+      'demo':demo,
       ArticleScrollPage,
       CardArchive
     }

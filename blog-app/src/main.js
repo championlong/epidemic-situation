@@ -13,11 +13,15 @@ import '@/assets/theme/index.css'
 import '@/assets/icon/iconfont.css'
 
 import {formatTime} from "./utils/time";
+import BaiduMap from 'vue-baidu-map'
 
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
+Vue.use(BaiduMap, {
+  ak: 'k8FwPDpAMU82EQjFdXy1uGeegXGL00dh'
+})
 
 Object.defineProperty(Vue.prototype, '$_', { value: lodash })
 
