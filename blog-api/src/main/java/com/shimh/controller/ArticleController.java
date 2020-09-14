@@ -5,6 +5,8 @@ import java.util.List;
 import com.shimh.common.annotation.LogAnnotation;
 import com.shimh.vo.ArticleVo;
 import com.shimh.vo.PageVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,7 @@ import com.shimh.service.TagService;
  */
 @RestController
 @RequestMapping(value = "/articles")
+@Api(value="文章接口",description = "文章管理接口，提供文章的增、删、改、查")
 public class ArticleController {
 
 
@@ -53,6 +56,7 @@ public class ArticleController {
                     @FastJsonFilter(clazz = Tag.class, props = {"id", "avatar"})},
             include = {@FastJsonFilter(clazz = User.class, props = {"nickname"})})
     @LogAnnotation(module = "文章", operation = "获取所有文章")
+    @ApiOperation("获取所有文章")
     public Result listArticles(ArticleVo article, PageVo page) {
         System.out.println(article);
         System.out.println(page);
