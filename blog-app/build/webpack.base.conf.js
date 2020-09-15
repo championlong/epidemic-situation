@@ -17,6 +17,7 @@ module.exports = {
   },
   externals: {
     'BMap': 'BMap',
+    'BMapLib': 'BMapLib',
     'BMap_Symbol_SHAPE_POINT': 'BMap_Symbol_SHAPE_POINT'
   },
   output: {
