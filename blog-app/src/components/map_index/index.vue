@@ -3,7 +3,6 @@
     <el-col :span="24" class="warp-main">
       <div>
         <div id="allmap"></div>
-        <div align="center"></div>
       </div>
     </el-col>
   </el-row>
@@ -18,8 +17,8 @@
     mounted() {
       /**================================================= 地图初始化 start ============================================*/
       var map = new BMap.Map("allmap");    // 创建Map实例
-      var data_info = [[126.615685, 45.72757, "当前商城容量：2000</br>总容量:5000"],
-        [126.617122, 45.716924, "当前医院人数：5000"],];
+      var data_info = [[126.615685, 45.72757, 2000, 80],
+        [126.617122, 45.716924, 4000, 100],];
       var points = [
         {"lng": 126.619601, "lat": 45.720693, "count": 50},
         {"lng": 126.619601, "lat": 45.720693, "count": 50},
@@ -54,30 +53,38 @@
         {"lng": 126.616367, "lat": 45.720693, "count": 32},];
 
       var opts = {
-        width: 250,     // 信息窗口宽度
-        height: 80,     // 信息窗口高度
-        title: "容量信息", // 信息窗口标题
+        width: 300,     // 信息窗口宽度
+        height: 150,     // 信息窗口高度
         enableMessage: true//设置允许信息窗发送短息
       };
 
       for (var i = 0; i < data_info.length; i++) {
         var marker = new BMap.Marker(new BMap.Point(data_info[i][0], data_info[i][1]));  // 创建标注
-        var content = data_info[i][2];
+        var total = data_info[i][2];
+        var present = data_info[i][3];
+
+        var html="<div> " +
+          "<h5 class='modal-title' id='exampleModalLabel'>容量信息</h5>"+
+          "<hr class=\"my-1\">" +
+          "<p>允许容量为："+ total +"</p>" +
+          "<p>当前容量为："+ present +"</p>" +
+          "<span class=\"badge badge-pill badge-primary\">确认安全</span>\n" +
+          "</div>";
         map.addOverlay(marker);               // 将标注添加到地图中
-        addClickHandler(content, marker);
+        addClickHandler(html, marker);
       }
 
-      function addClickHandler(content, marker) {
+      function addClickHandler(html, marker) {
         marker.addEventListener("click", function (e) {
-            openInfo(content, e)
+            openInfo(html, e)
           }
         );
       }
 
-      function openInfo(content, e) {
+      function openInfo(html, e) {
         var p = e.target;
         var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
-        var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象
+        var infoWindow = new BMap.InfoWindow(html, opts);  // 创建信息窗口对象
         map.openInfoWindow(infoWindow, point); //开启信息窗口
       }
 
