@@ -195,7 +195,7 @@
 
 <style scoped>
   #allmap {
-    height: 92%;
-    overflow: hidden;
+    height: 100%;
+    /*overflow: hidden;*/
   }
 </style>
