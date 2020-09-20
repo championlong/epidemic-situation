@@ -1,6 +1,7 @@
 <template>
   <div id="map" :style="{height:mapHeight}">
-    <div id="allmap" ref="allmap"></div>
+    <div id="allmap" ref="allmap">
+    </div>
   </div>
 </template>
 
@@ -9,7 +10,7 @@
     name: "demo",
     data() {
       return {
-        mapHeight: 1000 + "px",
+        mapHeight: 100 + "px",
       }
     },
     mounted() {
@@ -57,9 +58,9 @@
         {"lng": 126.616367, "lat": 45.720693, "count": 32},];
 
       var opts = {
-        width: 200,     // 信息窗口宽度
+        width: 150,     // 信息窗口宽度
         height: 100,     // 信息窗口高度
-        title: "信息状态",
+        // title: "信息状态",
       };
 
       for (var i = 0; i < data_info.length; i++) {
@@ -80,16 +81,16 @@
             "</p>\n" +
             "</div>";
         }else{
-          var html="<div style='position: relative;\"> " +
+        
+          var html="<div style='width: 200px;'> " +
             "<p>" +
             "<span class='badge badge-success'>"+place+"</span>" +
-            "疫情期间可容纳" +
+            " 疫情期间可容纳 " +
             "<span class='badge badge-success'>"+total+"</span>" +
-            "有"+
+            " 有 "+
             "<span class='badge badge-danger'>"+present+"</span>" +
-            "人。" +
-            "<span class=\"badge badge-danger\" style='position: absolute;" +
-            "left: 0px"+"bottom: 40px'>需要排队</span>" +
+            " 人。" +
+            "<span class=\"badge badge-danger\" style='float:right;"+"margin-top: 5px;'>需要排队</span>" +
             "</p>\n" +
             "</div>";
         }
@@ -187,7 +188,7 @@
     methods: {
       initMapHeight() {
         var main = document.getElementById("map");
-        main.style.height = window.innerHeight + "px";
+        main.style.height = window.innerHeight-60 + "px";
       },
     }
   }
@@ -195,7 +196,13 @@
 
 <style scoped>
   #allmap {
-    height: 92%;
-    overflow: hidden;
+    height: 100%;
+    /* overflow: hidden; */
+    position: relative;
+    
+  }
+    #map {
+    /* overflow: hidden; */
+    position: relative;
   }
 </style>

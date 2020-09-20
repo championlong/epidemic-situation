@@ -96,7 +96,9 @@
 <style scoped>
   .only {
     width: 100%;
-    margin: 0;
-    transform:translateY(60px);
+    margin:0px;
+    margin-top:60px;
+
+    /* transform:translateY(60px); */
   }
 </style>
