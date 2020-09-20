@@ -14,7 +14,7 @@ import '@/assets/icon/iconfont.css'
 
 import {formatTime} from "./utils/time";
 import BaiduMap from 'vue-baidu-map';
-import $ from 'jquery';
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
 

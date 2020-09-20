@@ -1,29 +1,8 @@
 <template>
-  <div v-title data-title="ForFun Find Yourself">
+  <div class="only">
 
     <demo></demo>
 
-    <el-container>
-
-      <el-main class="me-articles">
-        <article-scroll-page></article-scroll-page>
-
-      </el-main>
-
-      <el-aside>
-
-        <card-me class="me-area"></card-me>
-        <card-tag :tags="hotTags"></card-tag>
-
-        <card-article cardHeader="最热文章" :articles="hotArticles"></card-article>
-
-        <card-archive cardHeader="文章归档" :archives="archives"></card-archive>
-
-        <card-article cardHeader="最新文章" :articles="newArticles"></card-article>
-
-      </el-aside>
-
-    </el-container>
   </div>
 </template>
 
@@ -107,7 +86,7 @@
       'card-me': CardMe,
       'card-article': CardArticle,
       'card-tag': CardTag,
-      'demo':demo,
+      'demo': demo,
       ArticleScrollPage,
       CardArchive
     }
@@ -115,26 +94,9 @@
 </script>
 
 <style scoped>
-
-  .el-container {
-    width: 960px;
-  }
-
-  .el-aside {
-    margin-left: 20px;
-    width: 260px;
-  }
-
-  .el-main {
-    padding: 0px;
-    line-height: 16px;
-  }
-
-  .el-card {
-    border-radius: 0;
-  }
-
-  .el-card:not(:first-child) {
-    margin-top: 20px;
+  .only {
+    width: 100%;
+    margin: 0;
+    transform:translateY(60px);
   }
 </style>
