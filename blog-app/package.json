@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "d3-interpolate": "^2.0.1",
+    "echarts": "^4.9.0",
     "element-ui": "^2.0.10",
+    "jsonp": "^0.2.1",
     "lodash": "^4.17.4",
     "mavon-editor": "^2.4.16",
     "popper.js": "^1.16.1",

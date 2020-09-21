@@ -1,6 +1,7 @@
 <template>
   <div id="map" :style="{height:mapHeight}">
-    <div id="allmap" ref="allmap"></div>
+    <div id="allmap" ref="allmap">
+    </div>
   </div>
 </template>
 
@@ -9,7 +10,7 @@
     name: "demo",
     data() {
       return {
-        mapHeight: 1000 + "px",
+        mapHeight: 100 + "px",
       }
     },
     mounted() {
@@ -22,7 +23,7 @@
       /**================================================= 地图初始化 start ============================================*/
       var map = new BMapGL.Map("allmap");    // 创建Map实例
       var data_info = [[126.615685, 45.72757, 2000, 8000, "凯德广场"],
-        [126.617122, 45.716924, 4000, 100, "962医212院212"],];
+        [126.617122, 45.716924, 4000, 100, "962医院"],];
       var points = [
         {"lng": 126.619601, "lat": 45.720693, "count": 50},
         {"lng": 126.619601, "lat": 45.720693, "count": 50},
@@ -55,63 +56,57 @@
         {"lng": 126.616367, "lat": 45.720695, "count": 100},
         {"lng": 126.616367, "lat": 45.720693, "count": 87},
         {"lng": 126.616367, "lat": 45.720693, "count": 32},];
-
       var opts = {
-        width: 200,     // 信息窗口宽度
-        height: 100,     // 信息窗口高度
-        title: "信息状态",
+        width: 150,     // 信息窗口宽度
+        height: 80,     // 信息窗口高度
+        title: "信息状态",// title: "信息状态",
       };
-
       for (var i = 0; i < data_info.length; i++) {
         var marker = new BMapGL.Marker(new BMapGL.Point(data_info[i][0], data_info[i][1]));  // 创建标注
         var total = data_info[i][2];
         var present = data_info[i][3];
         var place = data_info[i][4]
         if(total >= present){
-          var html="<div> " +
+          var html="<div style='width: 200px;'> " +
             "<p>" +
             "<span class='badge badge-success'>"+place+"</span>" +
-            "疫情期间可容纳" +
+            " 疫情期间可容纳 " +
             "<span class='badge badge-success'>"+total+"</span>" +
-            "人，扫码人数已有"+
+            " 有 "+
             "<span class='badge badge-success'>"+present+"</span>" +
-            "人。" +
-            "<span class=\"badge badge-primary\" style='float: right'>确认安全</span>" +
+            " 人。" +
+            "<span class=\"badge badge-primary\" style='float:right;"+"margin-top: 5px;'>确认安全</span>" +
             "</p>\n" +
             "</div>";
         }else{
-          var html="<div style='position: relative;\"> " +
+
+          var html="<div style='width: 200px;'> " +
             "<p>" +
             "<span class='badge badge-success'>"+place+"</span>" +
-            "疫情期间可容纳" +
+            " 疫情期间可容纳 " +
             "<span class='badge badge-success'>"+total+"</span>" +
-            "有"+
+            " 有 "+
             "<span class='badge badge-danger'>"+present+"</span>" +
-            "人。" +
-            "<span class=\"badge badge-danger\" style='position: absolute;" +
-            "left: 0px"+"bottom: 40px'>需要排队</span>" +
+            " 人。" +
+            "<span class=\"badge badge-danger\" style='float:right;"+"margin-top: 5px;'>需要排队</span>" +
             "</p>\n" +
             "</div>";
         }
-
         map.addOverlay(marker);               // 将标注添加到地图中
         addClickHandler(html, marker);
       }
-
       function addClickHandler(html, marker) {
         marker.addEventListener("click", function (e) {
             openInfo(html, e)
           }
         );
       }
-
       function openInfo(html, e) {
         var p = e.target;
         var point = new BMapGL.Point(p.getPosition().lng, p.getPosition().lat);
         var infoWindow = new BMapGL.InfoWindow(html, opts);  // 创建信息窗口对象
         map.openInfoWindow(infoWindow, point); //开启信息窗口
       }
-
       map.centerAndZoom(new BMapGL.Point(126.622871, 45.721354), 15);  // 初始化地图,设置中心点坐标和地图级别
       //添加地图类型控件
       map.addControl(new BMapGL.MapTypeControl({
@@ -120,7 +115,6 @@
         ]
       }));
       map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-
       // var heatmapOverlay = new BMapLib.HeatmapOverlay({"radius": 20});
       // map.addOverlay(heatmapOverlay);
       // heatmapOverlay.setDataSet({data: points, max: 30});
@@ -131,7 +125,6 @@
       //   this.defaultAnchor = BMAP_ANCHOR_BOTTOM_RIGHT;
       //   this.defaultOffset = new BMapGL.Size(10, 10);
       // }
-
       // // 通过JavaScript的prototype属性继承于BMap.Control
       // ZoomControl.prototype = new BMapGL.Control();
       // // 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
@@ -187,7 +180,7 @@
     methods: {
       initMapHeight() {
         var main = document.getElementById("map");
-        main.style.height = window.innerHeight + "px";
+        main.style.height = window.innerHeight-60 + "px";
       },
     }
   }
@@ -196,6 +189,12 @@
 <style scoped>
   #allmap {
     height: 100%;
-    /*overflow: hidden;*/
+    /* overflow: hidden; */
+    position: relative;
+
+  }
+  #map {
+    /* overflow: hidden; */
+    position: relative;
   }
 </style>
