@@ -23,6 +23,7 @@ public class Swagger2Configuration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
+                //这里指定Controller扫描包路径
                 .apis(RequestHandlerSelectors.basePackage("com.shimh"))
                 .paths(PathSelectors.any())
                 .build();

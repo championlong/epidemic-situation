@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import com.shimh.common.annotation.LogAnnotation;
+import com.shimh.common.api.UploadControllerApi;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ import com.shimh.common.constant.ResultCode;
 import com.shimh.common.result.Result;
 
 @RestController
-public class UploadController {
+public class UploadController implements UploadControllerApi {
 
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
@@ -29,6 +30,7 @@ public class UploadController {
     @Value("${me.upload.path}")
     private String baseFolderPath;
 
+    @Override
     @PostMapping("/upload")
     @RequiresAuthentication
     @LogAnnotation(module = "文件上传", operation = "文件上传")

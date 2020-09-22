@@ -3,6 +3,7 @@ package com.shimh.controller;
 import java.util.List;
 
 import com.shimh.common.annotation.LogAnnotation;
+import com.shimh.common.api.CategoryControllerApi;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,13 @@ import com.shimh.vo.CategoryVO;
  */
 @RestController
 @RequestMapping(value = "/categorys")
-public class CategoryController {
+public class CategoryController implements CategoryControllerApi {
 
 
     @Autowired
     private CategoryService categoryService;
 
+    @Override
     @GetMapping
     @LogAnnotation(module = "文章分类", operation = "获取所有文章分类")
     public Result listCategorys() {
@@ -44,6 +46,7 @@ public class CategoryController {
         return Result.success(categorys);
     }
 
+    @Override
     @GetMapping("detail")
     @LogAnnotation(module = "文章分类", operation = "获取所有文章分类，详细")
     public Result listCategorysDetail() {
@@ -52,6 +55,7 @@ public class CategoryController {
         return Result.success(categorys);
     }
 
+    @Override
     @GetMapping("/{id}")
     @LogAnnotation(module = "文章分类", operation = "根据id获取文章分类")
     public Result getCategoryById(@PathVariable("id") Integer id) {
@@ -70,6 +74,7 @@ public class CategoryController {
         return r;
     }
 
+    @Override
     @GetMapping("/detail/{id}")
     @LogAnnotation(module = "文章分类", operation = "根据id获取详细文章分类，文章数")
     public Result getCategoryDetail(@PathVariable("id") Integer id) {
@@ -88,6 +93,7 @@ public class CategoryController {
         return r;
     }
 
+    @Override
     @PostMapping("/create")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "文章分类", operation = "添加文章分类")
@@ -100,6 +106,7 @@ public class CategoryController {
         return r;
     }
 
+    @Override
     @PostMapping("/update")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "文章分类", operation = "修改文章分类")
@@ -118,6 +125,7 @@ public class CategoryController {
         return r;
     }
 
+    @Override
     @GetMapping("/delete/{id}")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "文章分类", operation = "删除文章分类")

@@ -3,6 +3,7 @@ package com.shimh.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.shimh.common.annotation.LogAnnotation;
+import com.shimh.common.api.LoginControllerApi;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.LockedAccountException;
@@ -34,11 +35,12 @@ import com.shimh.service.UserService;
  * 2018年1月23日
  */
 @RestController
-public class LoginController {
+public class LoginController implements LoginControllerApi {
 
     @Autowired
     private UserService userService;
 
+    @Override
     @PostMapping("/login")
     @LogAnnotation(module = "登录", operation = "登录")
     public Result login(@RequestBody User user) {
@@ -47,6 +49,7 @@ public class LoginController {
         return r;
     }
 
+    @Override
     @PostMapping("/register")
     //@RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "注册", operation = "注册")
@@ -98,6 +101,7 @@ public class LoginController {
 
     }
 
+    @Override
     @RequestMapping(value = "/handleLogin")
     public Result handleLogin(HttpServletRequest request) {
         String id = request.getHeader(OAuthSessionManager.OAUTH_TOKEN);
@@ -106,6 +110,7 @@ public class LoginController {
     }
 
 
+    @Override
     @GetMapping("/logout")
     @LogAnnotation(module = "退出", operation = "退出")
     public Result logout() {

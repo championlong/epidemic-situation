@@ -3,6 +3,7 @@ package com.shimh.controller;
 import java.util.List;
 
 import com.shimh.common.annotation.LogAnnotation;
+import com.shimh.common.api.TagControllerApi;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,12 +31,13 @@ import com.shimh.vo.TagVO;
  */
 @RestController
 @RequestMapping(value = "/tags")
-public class TagController {
+public class TagController implements TagControllerApi {
 
 
     @Autowired
     private TagService tagService;
 
+    @Override
     @GetMapping
     @LogAnnotation(module = "标签", operation = "获取所有标签")
     public Result listTags() {
@@ -44,6 +46,7 @@ public class TagController {
         return Result.success(tags);
     }
 
+    @Override
     @GetMapping("detail")
     @LogAnnotation(module = "标签", operation = "获取所有标签，详细")
     public Result listCategorysDetail() {
@@ -52,6 +55,7 @@ public class TagController {
         return Result.success(categorys);
     }
 
+    @Override
     @GetMapping("/hot")
     @LogAnnotation(module = "标签", operation = "获取最热标签")
     public Result listHotTags() {
@@ -61,6 +65,7 @@ public class TagController {
         return Result.success(tags);
     }
 
+    @Override
     @GetMapping("/{id}")
     @LogAnnotation(module = "标签", operation = "根据id获取标签")
     public Result getTagById(@PathVariable("id") Integer id) {
@@ -79,6 +84,7 @@ public class TagController {
         return r;
     }
 
+    @Override
     @GetMapping("/detail/{id}")
     @LogAnnotation(module = "标签", operation = "根据id获取详细标签，文章数")
     public Result getTagDetail(@PathVariable("id") Integer id) {
@@ -97,6 +103,7 @@ public class TagController {
         return r;
     }
 
+    @Override
     @PostMapping("/create")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "标签", operation = "添加标签")
@@ -109,6 +116,7 @@ public class TagController {
         return r;
     }
 
+    @Override
     @PostMapping("/update")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "标签", operation = "修改标签")
@@ -127,6 +135,7 @@ public class TagController {
         return r;
     }
 
+    @Override
     @GetMapping("/delete/{id}")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "标签", operation = "删除标签")

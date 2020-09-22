@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.alibaba.fastjson.support.spring.annotation.FastJsonFilter;
 import com.alibaba.fastjson.support.spring.annotation.FastJsonView;
 import com.shimh.common.annotation.LogAnnotation;
+import com.shimh.common.api.UserControllerApi;
 import com.shimh.entity.Article;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -39,11 +40,12 @@ import com.shimh.service.UserService;
  */
 @RestController
 @RequestMapping(value = "/users")
-public class UserController {
+public class UserController implements UserControllerApi {
 
     @Autowired
     private UserService userService;
 
+    @Override
     @GetMapping
     @LogAnnotation(module = "用户", operation = "获取所有用户")
     @RequiresRoles(Base.ROLE_ADMIN)
@@ -53,6 +55,7 @@ public class UserController {
         return Result.success(users);
     }
 
+    @Override
     @GetMapping("/{id}")
     @LogAnnotation(module = "用户", operation = "根据id获取用户")
     @RequiresRoles(Base.ROLE_ADMIN)
@@ -72,6 +75,7 @@ public class UserController {
         return r;
     }
 
+    @Override
     @GetMapping("/currentUser")
     @FastJsonView(
             include = {@FastJsonFilter(clazz = User.class, props = {"id", "account", "nickname", "avatar"})})
@@ -87,6 +91,7 @@ public class UserController {
         return r;
     }
 
+    @Override
     @PostMapping("/create")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "用户", operation = "添加用户")
@@ -99,6 +104,7 @@ public class UserController {
         return r;
     }
 
+    @Override
     @PostMapping("/update")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "用户", operation = "修改用户")
@@ -117,6 +123,7 @@ public class UserController {
         return r;
     }
 
+    @Override
     @GetMapping("/delete/{id}")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "用户", operation = "删除用户")

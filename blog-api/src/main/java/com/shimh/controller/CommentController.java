@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.shimh.common.annotation.LogAnnotation;
+import com.shimh.common.api.CommentControllerApi;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,13 @@ import com.shimh.service.CommentService;
  */
 @RestController
 @RequestMapping(value = "/comments")
-public class CommentController {
+public class CommentController implements CommentControllerApi {
 
 
     @Autowired
     private CommentService commentService;
 
+    @Override
     @GetMapping
     @LogAnnotation(module = "评论", operation = "获取所有评论")
     public Result listComments() {
@@ -50,6 +52,7 @@ public class CommentController {
         return Result.success(comments);
     }
 
+    @Override
     @GetMapping("/{id}")
     @LogAnnotation(module = "评论", operation = "根据id获取评论")
     public Result getCommentById(@PathVariable("id") Integer id) {
@@ -68,6 +71,7 @@ public class CommentController {
         return r;
     }
 
+    @Override
     @GetMapping("/article/{id}")
     @FastJsonView(
             exclude = {
@@ -91,6 +95,7 @@ public class CommentController {
     }
 
 
+    @Override
     @PostMapping("/create")
     @RequiresAuthentication
     @LogAnnotation(module = "评论", operation = "添加评论")
@@ -104,6 +109,7 @@ public class CommentController {
     }
 
 
+    @Override
     @GetMapping("/delete/{id}")
     @RequiresAuthentication
     @LogAnnotation(module = "评论", operation = "删除评论")
@@ -121,6 +127,7 @@ public class CommentController {
         return r;
     }
 
+    @Override
     @PostMapping("/create/change")
     @FastJsonView(
             exclude = {
@@ -137,6 +144,7 @@ public class CommentController {
     }
 
 
+    @Override
     @GetMapping("/delete/change/{id}")
     @RequiresAuthentication
     @LogAnnotation(module = "评论", operation = "删除评论，减少评论数")

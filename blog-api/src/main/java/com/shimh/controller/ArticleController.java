@@ -3,6 +3,7 @@ package com.shimh.controller;
 import java.util.List;
 
 import com.shimh.common.annotation.LogAnnotation;
+import com.shimh.common.api.ArticleControllerApi;
 import com.shimh.vo.ArticleVo;
 import com.shimh.vo.PageVo;
 import io.swagger.annotations.Api;
@@ -39,8 +40,7 @@ import com.shimh.service.TagService;
  */
 @RestController
 @RequestMapping(value = "/articles")
-@Api(value="文章接口",description = "文章管理接口，提供文章的增、删、改、查")
-public class ArticleController {
+public class ArticleController implements ArticleControllerApi {
 
 
     @Autowired
@@ -49,6 +49,7 @@ public class ArticleController {
     @Autowired
     private TagService tagService;
 
+    @Override
     @GetMapping
     @FastJsonView(
             exclude = {
@@ -56,7 +57,6 @@ public class ArticleController {
                     @FastJsonFilter(clazz = Tag.class, props = {"id", "avatar"})},
             include = {@FastJsonFilter(clazz = User.class, props = {"nickname"})})
     @LogAnnotation(module = "文章", operation = "获取所有文章")
-    @ApiOperation("获取所有文章")
     public Result listArticles(ArticleVo article, PageVo page) {
         System.out.println(article);
         System.out.println(page);
@@ -64,6 +64,7 @@ public class ArticleController {
         return Result.success(articles);
     }
 
+    @Override
     @GetMapping("/hot")
     @FastJsonView(include = {@FastJsonFilter(clazz = Article.class, props = {"id", "title"})})
     @LogAnnotation(module = "文章", operation = "获取最热文章")
@@ -74,6 +75,7 @@ public class ArticleController {
         return Result.success(articles);
     }
 
+    @Override
     @GetMapping("/new")
     @FastJsonView(include = {@FastJsonFilter(clazz = Article.class, props = {"id", "title"})})
     @LogAnnotation(module = "文章", operation = "获取最新文章")
@@ -85,6 +87,7 @@ public class ArticleController {
     }
 
 
+    @Override
     @GetMapping("/{id}")
     @FastJsonView(
             exclude = {
@@ -107,6 +110,7 @@ public class ArticleController {
         return r;
     }
 
+    @Override
     @GetMapping("/view/{id}")
     @FastJsonView(
             exclude = {
@@ -131,6 +135,7 @@ public class ArticleController {
         return r;
     }
 
+    @Override
     @GetMapping("/tag/{id}")
     @FastJsonView(
             exclude = {
@@ -145,6 +150,7 @@ public class ArticleController {
     }
 
 
+    @Override
     @GetMapping("/category/{id}")
     @FastJsonView(
             exclude = {
@@ -158,6 +164,7 @@ public class ArticleController {
         return Result.success(articles);
     }
 
+    @Override
     @PostMapping("/publish")
     @RequiresAuthentication
     @LogAnnotation(module = "文章", operation = "发布文章")
@@ -170,6 +177,7 @@ public class ArticleController {
         return r;
     }
 
+    @Override
     @PostMapping("/update")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "文章", operation = "修改文章")
@@ -188,6 +196,7 @@ public class ArticleController {
         return r;
     }
 
+    @Override
     @GetMapping("/delete/{id}")
     @RequiresRoles(Base.ROLE_ADMIN)
     @LogAnnotation(module = "文章", operation = "删除文章")
@@ -205,6 +214,7 @@ public class ArticleController {
         return r;
     }
 
+    @Override
     @GetMapping("/listArchives")
     @LogAnnotation(module = "文章", operation = "获取文章归档日期")
     public Result listArchives() {

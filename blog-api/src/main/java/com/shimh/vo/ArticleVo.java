@@ -2,7 +2,11 @@ package com.shimh.vo;
 
 import com.shimh.entity.Article;
 
-public class ArticleVo extends Article {
+/**
+ * Article查询对象
+ * 包含查询属性
+ */
+public class ArticleVo extends RequestVo {
 
     private Integer year;
 

@@ -5,7 +5,9 @@ public class PageVo {
     private Integer pageNumber;
 
     private Integer pageSize;
-
+    /**
+     * 根据name排序
+     */
     private String name;
 
     private String sort;

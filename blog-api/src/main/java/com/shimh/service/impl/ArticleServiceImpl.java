@@ -39,6 +39,12 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.listArticles(page);
     }
 
+    /**
+     * 获取所有文章
+     * @param article 文章对象
+     * @param page 分页对象
+     * @return 文章集合
+     */
     @Override
     public List<Article> listArticles(ArticleVo article, PageVo page) {
 

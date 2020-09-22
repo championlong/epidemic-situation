@@ -42,41 +42,61 @@ public class Article extends BaseEntity<Integer> {
      *
      */
     private static final long serialVersionUID = -4470366380115322213L;
-
+    /**
+     * 标题
+     */
     @NotBlank
     @Column(name = "title", length = 40)
     private String title;
-
+    /**
+     * 摘要
+     */
     @NotBlank
     @Column(name = "summary", length = 100)
     private String summary;
 
-
+    /**
+     * 作者
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private User author;
-
+    /**
+     * 文章内容
+     */
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "body_id")
     private ArticleBody body;
 
-
+    /**
+     * 类别
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
+    /**
+     * 标签
+     */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "me_article_tag",
             joinColumns = {@JoinColumn(name = "article_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private List<Tag> tags;
 
+    /**
+     * 评论
+     */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "article", orphanRemoval = true)
     private List<Comment> comments;
-
+    /**
+     * 评论数
+     */
     @Column(name = "comment_counts")
     private int commentCounts;
-
+    /**
+     * 访问量
+     */
     @Column(name = "view_counts")
     private int viewCounts;
 

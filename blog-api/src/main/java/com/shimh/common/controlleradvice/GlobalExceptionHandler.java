@@ -24,7 +24,7 @@ import com.shimh.common.result.Result;
 
 /**
  * 全局异常处理器
- *
+ * 处理框架异常
  * @author shimh
  * <p>
  * 2018年1月23日

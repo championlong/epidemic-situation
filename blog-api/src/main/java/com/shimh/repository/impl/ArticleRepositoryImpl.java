@@ -45,11 +45,17 @@ public class ArticleRepositoryImpl implements ArticleWrapper {
             query.setFirstResult(page.getPageSize() * (page.getPageNumber() - 1));
             query.setMaxResults(page.getPageSize());
         }
-
+        System.out.println("一个参数");
         return query.list();
 
     }
 
+    /**
+     * 条件查询
+     * @param article 文章条件查询
+     * @param page 页面条件
+     * @return 文章集合
+     */
     @Override
     public List<Article> listArticles(ArticleVo article, PageVo page) {
 
@@ -115,7 +121,7 @@ public class ArticleRepositoryImpl implements ArticleWrapper {
             query.setFirstResult(page.getPageSize() * (page.getPageNumber() - 1));
             query.setMaxResults(page.getPageSize());
         }
-
+        System.out.println("两个参数");
         return query.list();
 
 //        StringBuilder hql = new StringBuilder("select a.* from me_article a ");
@@ -181,6 +187,7 @@ public class ArticleRepositoryImpl implements ArticleWrapper {
 //
 //        return query.list();
 
+
     }
 
     @Override
@@ -194,6 +201,7 @@ public class ArticleRepositoryImpl implements ArticleWrapper {
         query.addScalar("count", IntegerType.INSTANCE);
 
         query.setResultTransformer(Transformers.aliasToBean(ArticleVo.class));
+        System.out.println("无参数");
         return query.list();
     }
 
