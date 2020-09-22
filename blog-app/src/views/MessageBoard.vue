@@ -1,51 +1,34 @@
 <template>
-
-  <div class="me-message" v-title :data-title="title">
-    <el-container class="">
-      <el-main class="me-main">
-        <el-alert
-          title="不能留言哦。。。。。。。。。。。"
-          type="warning"
-          center
-          show-icon>
-        </el-alert>
-
-      </el-main>
-    </el-container>
+  <div class="block">
+    <el-timeline>
+      <el-timeline-item timestamp="2018/4/12" placement="top">
+        <el-card>
+          <h4>更新 Github 模板</h4>
+          <p>王小虎 提交于 2018/4/12 20:46</p>
+        </el-card>
+      </el-timeline-item>
+      <el-timeline-item timestamp="2018/4/3" placement="top">
+        <el-card>
+          <h4>更新 Github 模板</h4>
+          <p>王小虎 提交于 2018/4/3 20:46</p>
+        </el-card>
+      </el-timeline-item>
+      <el-timeline-item timestamp="2018/4/2" placement="top">
+        <el-card>
+          <h4>更新 Github 模板</h4>
+          <p>王小虎 提交于 2018/4/2 20:46</p>
+        </el-card>
+      </el-timeline-item>
+    </el-timeline>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'MessageBoard',
-    data() {
-      return {
-      }
-    },
-    computed: {
-      title (){
-        return '留言板 - For Fun'
-      }
-    }
-  }
+
 </script>
 
-<style scoped>
-  .me-message {
+<style>
+  .block{
+    width: 75%;
   }
-
-  .el-container {
-    width: 700px;
-  }
-
-  .me-main {
-    overflow: hidden;
-  }
-
-  .me-log-box {
-    margin-left: 30%;
-    margin-top: 20px;
-
-  }
-
 </style>

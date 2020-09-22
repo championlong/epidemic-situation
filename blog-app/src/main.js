@@ -2,13 +2,16 @@
 import Vue from 'vue'
 import App from './App'
 
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+
+import '@/assets/theme/index.css'
+
 import router from './router'
 import store from './store'
 
 import lodash from 'lodash'
 
-import ElementUI from 'element-ui'
-import '@/assets/theme/index.css'
 
 import '@/assets/icon/iconfont.css'
 
