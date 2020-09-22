@@ -1,140 +1,101 @@
 <template>
-  <div v-title data-title="ForFun Find Yourself">
-
-    <demo></demo>
-
-    <el-container>
-
-      <el-main class="me-articles">
-        <article-scroll-page></article-scroll-page>
-
-      </el-main>
-
-      <el-aside>
-
-        <card-me class="me-area"></card-me>
-        <card-tag :tags="hotTags"></card-tag>
-
-        <card-article cardHeader="最热文章" :articles="hotArticles"></card-article>
-
-        <card-archive cardHeader="文章归档" :archives="archives"></card-archive>
-
-        <card-article cardHeader="最新文章" :articles="newArticles"></card-article>
-
-      </el-aside>
-
-    </el-container>
+  <div class="only">
+    <message :title="title" :sums="sums"></message>
+    <div id="chart" style="width: 100% ;height: 600px;margin-top: 50px" align="center"></div>
   </div>
 </template>
 
 <script>
-  import CardMe from '@/components/card/CardMe'
-  import CardArticle from '@/components/card/CardArticle'
-  import CardArchive from '@/components/card/CardArchive'
-  import CardTag from '@/components/card/CardTag'
-  import demo from '@/components/map_index'
 
-  import ArticleScrollPage from '@/views/common/ArticleScrollPage'
-
-  import {getArticles, getHotArtices, getNewArtices} from '@/api/article'
-  import {getHotTags} from '@/api/tag'
-  import {listArchives} from '@/api/article'
+  import message from '@/components/message'
+  import echarts from "echarts"
+  import jsonp from "jsonp"
+  import "echarts/map/js/china"
 
   export default {
     name: 'Index',
     created() {
-      this.getHotArtices()
-      this.getNewArtices()
-      this.getHotTags()
-      this.listArchives()
     },
+    props: {},
     data() {
       return {
-        hotTags: [],
-        hotArticles: [],
-        newArticles: [],
-        archives: []
+        title: "国内疫情",
+        sums: [
+          {name: 'confirmed', text: '确诊', color: "#F55253", sum: 63951, add: "+19"},
+          {name: 'suspected', text: '疑似', color: "#FF961E", sum: 10109, add: "+2450"},
+          {name: 'die', text: '死亡', color: "#66666c", sum: 1382, add: "+1"},
+          {name: 'ok', text: '治愈', color: "#178B50", sum: 7094, add: "+366"}
+        ],
+        mychinaChart: "",
       }
     },
-    methods: {
-      getHotArtices() {
-        let that = this
-        getHotArtices().then(data => {
-          that.hotArticles = data.data
-        }).catch(error => {
-          if (error !== 'error') {
-            that.$message({type: 'error', message: '最热文章加载失败!', showClose: true})
+    mounted() {
+      let options = {
+        series: [
+          {
+            type: "map",
+            map: "china",
+            data: [
+              {name: '北京', value: '320'},
+              {name: '天津', value: '362'},
+              {name: '上海', value: '532'},
+              {name: '重庆', value: '632'},
+              {name: '湖北', value: '5990'}],
+            label: {
+              show: true,
+              color: "black",
+              fontSize: 10
+            },
+            zoom: 1.25,
+            itemStyle: {
+              borderColor: "gray"
+            },
+            emphasis: {//区域高亮显示时状态
+              label: {//高亮时字体样式
+              },
+              itemStyle: {//高亮是区域样式
+                borderColor: '#ccc'
+              }
+            }
           }
-
-        })
-
-      },
-      getNewArtices() {
-        let that = this
-        getNewArtices().then(data => {
-          that.newArticles = data.data
-        }).catch(error => {
-          if (error !== 'error') {
-            that.$message({type: 'error', message: '最新文章加载失败!', showClose: true})
-          }
-
-        })
-
-      },
-      getHotTags() {
-        let that = this
-        getHotTags().then(data => {
-          that.hotTags = data.data
-        }).catch(error => {
-          if (error !== 'error') {
-            that.$message({type: 'error', message: '最热标签加载失败!', showClose: true})
-          }
-
-        })
-      },
-      listArchives() {
-        listArchives().then((data => {
-          this.archives = data.data
-        })).catch(error => {
-          if (error !== 'error') {
-            that.$message({type: 'error', message: '文章归档加载失败!', showClose: true})
-          }
-        })
-      }
-
+        ],
+        tooltip: {//提示框组件
+          show: true,
+          trigger: 'item',
+          formatter: '地区：{b}<br/>确诊：{c}'// {a}（系列名称），{b}（区域名称），{c}（合并数值）, {d}（无）
+        },
+        visualMap: {//视觉映射组件
+          type: 'piecewise',//映射组件类型(1、piecewise--分段型;2、continuous--连续型)
+          inRange: {
+            color: ['#CCC', '#F2B252', '#D1241A']//数据段范围颜色
+          },
+          pieces: [//地图左下角显示可视化
+            {min: 10000, color: '#D1241A'}, // 不指定 max，表示 max 为无限大（Infinity）。
+            {min: 1000, max: 9999, color: '#F27152'},
+            {min: 100, max: 999, color: '#F28E52'},
+            {min: 10, max: 99, color: '#F2B252'},
+            {min: 1, max: 9, color: '#A5A5A5'},
+            {value: 0}, // 表示 value 等于 0 的情况。
+          ]
+        },
+      };
+      this.mychinaChart = echarts.init(document.getElementById("chart"));
+      this.mychinaChart.setOption(options);
     },
+    methods: {},
     components: {
-      'card-me': CardMe,
-      'card-article': CardArticle,
-      'card-tag': CardTag,
-      'demo':demo,
-      ArticleScrollPage,
-      CardArchive
+      'message': message,
     }
   }
 </script>
-
-<style scoped>
-
-  .el-container {
-    width: 960px;
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+  .only {
+    width: 100%;
+    margin: 0px;
+    margin-top: 60px;
+    /* transform:translateY(60px); */
   }
 
-  .el-aside {
-    margin-left: 20px;
-    width: 260px;
-  }
-
-  .el-main {
-    padding: 0px;
-    line-height: 16px;
-  }
-
-  .el-card {
-    border-radius: 0;
-  }
-
-  .el-card:not(:first-child) {
-    margin-top: 20px;
-  }
 </style>
+
