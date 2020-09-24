@@ -23,7 +23,7 @@
         series: [
           {
             type: "map",
-            map: "china",
+            map: "北京",
             data: [
               {name: '北京', value: '320'},
               {name: '上海', value: '362'},
