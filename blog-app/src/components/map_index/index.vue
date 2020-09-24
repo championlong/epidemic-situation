@@ -75,7 +75,7 @@
             " 有 "+
             "<span class='badge badge-success'>"+present+"</span>" +
             " 人。" +
-            "<span class=\"badge badge-primary\" style='float:right;"+"margin-top: 5px;'>确认安全</span>" +
+            "<span class=\"badge badge-primary\" style='float:right;"+"margin-top: 5px;'>无需排队</span>" +
             "</p>\n" +
             "</div>";
         }else{
