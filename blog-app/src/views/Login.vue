@@ -5,7 +5,7 @@
       </video>-->
 
     <div class="me-login-box me-login-box-radius">
-      <h1>ForFun 登录</h1>
+      <h1>登录</h1>
 
       <el-form ref="userForm" :model="userForm" :rules="rules">
         <el-form-item prop="account">
@@ -22,11 +22,11 @@
       </el-form>
 
       <div class="me-login-design">
-        <p>Designed by
-          <strong>
-            <router-link to="/" class="me-login-design-color">ForFun</router-link>
-          </strong>
-        </p>
+<!--        <p>Designed by-->
+<!--          <strong>-->
+<!--            <router-link to="/" class="me-login-design-color">ForFun</router-link>-->
+<!--          </strong>-->
+<!--        </p>-->
       </div>
 
     </div>

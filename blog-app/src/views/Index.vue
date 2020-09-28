@@ -1,7 +1,7 @@
 <template>
   <div class="only">
-    <message :title="title" :sums="sums"></message>
-    <china id="chart" style="width: 100% ;height: 600px;margin-top: 50px" align="center"  @ready="onReady" @click="onClick"></china>
+    <message :title="title" :sums="sums" :updateTime="updateTime"></message>
+    <china id="chart" style="width: 100% ;height: 800px;margin-top: 40px" align="center"></china>
   </div>
 </template>
 
@@ -19,26 +19,20 @@
       return {
         title: "国内疫情",
         sums: [
-          {name: 'confirmed', text: '确诊', color: "#F55253", sum: 63951, add: "+19"},
-          {name: 'suspected', text: '疑似', color: "#FF961E", sum: 10109, add: "+2450"},
-          {name: 'die', text: '死亡', color: "#66666c", sum: 1382, add: "+1"},
-          {name: 'ok', text: '治愈', color: "#178B50", sum: 7094, add: "+366"}
+          {name: 'suspected', text: '现有确诊', color: "#FF0000", sum: 376, add: "-2"},
+          {name: 'suspected', text: '无症状感染者', color: "#FF961E", sum: 391, add: "+26"},
+          {name: 'suspected', text: '境外输入', color: "#FFCC00", sum: 2802, add: "+14"},
+          {name: 'confirmed', text: '累计确诊', color: "#F55253", sum: 90966, add: "+15"},
+          {name: 'ok', text: '累计治愈', color: "#178B50", sum: 85844, add: "+17"},
+          {name: 'die', text: '累计死亡', color: "#66666c", sum: 4746, add: "+0"}
         ],
-        mychinaChart: "",
+        updateTime:"2020-09-27 09:37",
       }
     },
     mounted() {
 
     },
     methods: {
-      onReady(instance) {
-        console.log(instance);
-      },
-      onClick(event, instance, echarts) {
-        console.log(arguments[0].name);
-        console.log(111)
-        this.$emit('chart-click', arguments)
-      }
     },
     components: {
       'message': message,

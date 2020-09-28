@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <div
-      id="chart"
-      style="width: 100%; height: 600px; margin-top: 50px"
-      align="center"
-    ></div>
+  <div id="map">
+    <div></div>
   </div>
 </template>
 
@@ -18,16 +14,51 @@ export default {
   data() {
     return {
       options: {
+        title:{
+          text: '中国疫情地图',
+          left: 'center',
+          subtext:'点击标题返回全国地图',
+          triggerEvent:true,
+          textStyle: {
+            fontWeight: 'normal',
+          }
+        },
         series: [
           {
             type: "map",
-            map: "北京",
+            map: "china",
             data: [
-              { name: "北京", value: "320" },
-              { name: "上海", value: "362" },
-              { name: "广州", value: "532" },
-              { name: "黑龙江", value: "632" },
-              { name: "辽宁", value: "5990" },
+              { name: "北京", value: "1" },
+              { name: "云南", value: "11" },
+              { name: "广西", value: "3" },
+              { name: "天津", value: "4" },
+              { name: "内蒙古", value: "3" },
+              { name: "河北", value: "2" },
+              { name: "陕西", value: "26" },
+              { name: "台湾", value: "23" },
+              { name: "江苏", value: "2" },
+              { name: "山东", value: "4" },
+              { name: "河南", value: "4" },
+              { name: "浙江", value: "9" },
+              { name: "上海", value: "41" },
+              { name: "香港", value: "177" },
+              { name: "广东", value: "21" },
+              { name: "四川", value: "28" },
+              { name: "辽宁", value: "6" },
+              { name: "福建", value: "15" },
+              { name: "大兴安岭地区", value: "3" },
+              { name: "黑河市", value: "14" },
+              { name: "齐齐哈尔市", value: "43" },
+              { name: "大庆市", value: "27" },
+              { name: "绥化市", value: "47" },
+              { name: "伊春市", value: "1" },
+              { name: "鹤岗市", value: "5" },
+              { name: "哈尔滨市", value: "264" },
+              { name: "牡丹江市", value: "25" },
+              { name: "鸡西市", value: "46" },
+              { name: "双鸭山市", value: "52" },
+              { name: "佳木斯市", value: "15" },
+              { name: "七台河市", value: "17" },
             ],
             label: {
               show: true,
@@ -54,7 +85,7 @@ export default {
           //提示框组件
           show: true,
           trigger: "item",
-          formatter: "地区：{b}<br/>确诊：{c}", // {a}（系列名称），{b}（区域名称），{c}（合并数值）, {d}（无）
+          formatter:" 地区：{b}<br/>确诊：{c}", // {a}（系列名称），{b}（区域名称），{c}（合并数值）, {d}（无）
         },
         visualMap: {
           //视觉映射组件
@@ -68,7 +99,7 @@ export default {
             { min: 1000, max: 9999, color: "#F27152" },
             { min: 100, max: 999, color: "#F28E52" },
             { min: 10, max: 99, color: "#F2B252" },
-            { min: 1, max: 9, color: "#A5A5A5" },
+            { min: 1, max: 9, color: "#FFFFCC" },
             { value: 0 }, // 表示 value 等于 0 的情况。
           ],
         },
@@ -160,63 +191,31 @@ export default {
           // 获取得城市拼音
           await import(`echarts/map/js/province/${cityArr[1][i]}`);
           this.options.series[0].map = cityArr[0][i];
+          this.options.series[0].label.show = false;
+          this.options.title.text = params.name + '疫情地图';
           this.mychinaChart.setOption(this.options, true);
         }
       }
-    });
-
-    function showCity(zhName, pyName) {
-      console.log(zhName, pyName);
-
-      // 调用
-
-      $.getScript(
-        "../../node_modules/echarts/map/js/province/" + pyName + ".js",
-        function () {
-          // 设定中文省份名才能显示相关省份，之后想要设置什么数据，直接设置到option这里就可以了
-          this.options.series[0].mapType = zhName;
-
-          // 深拷贝，另建option以免丢失原始option数据
-          var cityOption = JSON.parse(JSON.stringify(this.options));
-          // 模拟虚拟数据
-          if (zhName == "广东") {
-            cityOption.series[0].data = [
-              {
-                name: "梅州市",
-                value: [100, 100],
-              },
-              {
-                name: "深圳市",
-                value: [100, 200],
-              },
-            ];
-          } else if (zhName == "北京") {
-            cityOption.series[0].data = [
-              {
-                name: "海淀区",
-                value: [500, 1000],
-              },
-              {
-                name: "朝阳区",
-                value: [500, 4000],
-              },
-            ];
-          }
-
-          this.mychinaChart.setOption(cityOption);
-        }
-      );
+    if (params.componentType == 'title') {
+      this.options.series[0].map = "china";
+      this.options.series[0].label.show = true;
+      this.options.title.text = '中国疫情地图';
+      this.mychinaChart.setOption(this.options, true);
     }
+    });
   },
-  watch: {
-    //观察data的变化
-    options: {
-      handler: function (val, oldVal) {
-        console.log("hahhaha");
-      },
-      deep: true, // 深度监听，监听到更深层级值的变化
-    },
-  },
+  // watch: {
+  //   //观察data的变化
+  //   options: {
+  //     handler: function (val, oldVal) {
+  //       console.log("hahhaha");
+  //     },
+  //     deep: true, // 深度监听，监听到更深层级值的变化
+  //   },
+  // },
   methods: {},
 };
 </script>
+<style scoped>
+
+</style>

@@ -22,8 +22,17 @@
       };
       /**================================================= 地图初始化 start ============================================*/
       var map = new BMapGL.Map("allmap");    // 创建Map实例
-      var data_info = [[126.615685, 45.72757, 2000, 8000, "凯德广场"],
-        [126.617122, 45.716924, 4000, 100, "962医院"],];
+      var data_info = [[126.615685, 45.72757, 2000, 2100, "凯德广场"],
+        [126.617122, 45.716924, 4000, 100, "962医院"],
+        [126.617843,45.720004, 400, 236, "千口顺饺子馆"],
+        [126.618081,45.719381, 4000, 100, "蒙克巴雅尔烤羊腿"],
+        [126.616828,45.720979, 500, 300, "学府水果超市"],
+        [126.61977,45.718752, 4000, 100, "希诺扒王"],
+        [126.61611,45.717795, 4000, 100, "王师傅盒饭快餐"],
+        [126.61611,45.717795, 4000, 100, "玉凤食杂店"],
+        [126.612395,45.716914, 4000, 100, "学新仓买"],
+        [126.611254,45.720419, 4000, 100, "手擀刀削面"],
+      ];
       var points = [
         {"lng": 126.619601, "lat": 45.720693, "count": 50},
         {"lng": 126.619601, "lat": 45.720693, "count": 50},
@@ -72,7 +81,7 @@
             "<span class='badge badge-success'>"+place+"</span>" +
             " 疫情期间可容纳 " +
             "<span class='badge badge-success'>"+total+"</span>" +
-            " 有 "+
+            " 人，目前有 "+
             "<span class='badge badge-success'>"+present+"</span>" +
             " 人。" +
             "<span class=\"badge badge-primary\" style='float:right;"+"margin-top: 5px;'>无需排队</span>" +
@@ -85,7 +94,7 @@
             "<span class='badge badge-success'>"+place+"</span>" +
             " 疫情期间可容纳 " +
             "<span class='badge badge-success'>"+total+"</span>" +
-            " 有 "+
+            " 人，目前有 "+
             "<span class='badge badge-danger'>"+present+"</span>" +
             " 人。" +
             "<span class=\"badge badge-danger\" style='float:right;"+"margin-top: 5px;'>需要排队</span>" +
@@ -115,6 +124,8 @@
         ]
       }));
       map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      var navi3DCtrl = new BMapGL.NavigationControl3D();  // 添加3D控件
+      map.addControl(navi3DCtrl);
       // var heatmapOverlay = new BMapLib.HeatmapOverlay({"radius": 20});
       // map.addOverlay(heatmapOverlay);
       // heatmapOverlay.setDataSet({data: points, max: 30});
@@ -180,7 +191,7 @@
     methods: {
       initMapHeight() {
         var main = document.getElementById("map");
-        main.style.height = window.innerHeight-60 + "px";
+        main.style.height = window.innerHeight-105 + "px";
       },
     }
   }
