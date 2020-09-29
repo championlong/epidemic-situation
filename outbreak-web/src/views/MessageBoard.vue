@@ -1,5 +1,5 @@
 <template>
-  <div class="block">
+  <div style="width: 75%">
     <el-timeline>
       <el-timeline-item :timestamp=al.data placement="top" v-for="(al, index) in als" :key="index">
         <el-card>
@@ -109,17 +109,7 @@
   }
 </script>
 
-<style>
-  .block {
-    width: 70%;
-  }
-
-  .content {
-    display: flex;
-    margin-bottom: 30px;
-  }
-
-
+<style scoped>
   .retract {
     position: relative;
     overflow: hidden;
