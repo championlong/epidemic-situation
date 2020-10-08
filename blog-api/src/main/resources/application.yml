@@ -1,0 +1,60 @@
+#server
+server:
+  port: 8888
+#upload
+spring:
+  application:
+    name: Outbreak_map
+  http:
+    multipart:
+      max-file-size: 20Mb
+      max-request-size: 30Mb
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${me.upload.path}
+  # datasource
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/blog?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      initialSize: 5  #初始建立连接数量
+      minIdle: 5  #最小连接数量
+      maxActive: 20 #最大连接数量
+      maxWait: 10000  #获取连接最大等待时间，毫秒
+      testOnBorrow: true #申请连接时检测连接是否有效
+      testOnReturn: false #归还连接时检测连接是否有效
+      timeBetweenEvictionRunsMillis: 60000 #配置间隔检测连接是否有效的时间（单位是毫秒）
+      minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
+  #jpa
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  #redis
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+#uploadPath
+me:
+  upload:
+    path: D:/blogFile/
+#log
+logging:
+  config: classpath:log4j2-spring.xml
+
+#mybatis的相关配置
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.shimh.entity
+  #开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true

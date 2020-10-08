@@ -23,18 +23,29 @@ import com.shimh.oauth.OAuthSessionManager;
 @Configuration
 public class ShiroConfig {
 
+    /**
+     * Filter工厂，设置对应的过滤条件和跳转条件
+     * 关于权限：
+     *    anon：无需认证就可以访问
+     * ​　　authc：必须认证了才能访问 ​
+     * 　　user：必须用有了 记住我 功能才能用 ​
+     * 　　perms：拥有对某个资源的权限才能访问 ​
+     * 　　role：拥有某个角色权限才能访问
+     * @param securityManager
+     * @return
+     */
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();  
-       /* filterChainDefinitionMap.put("/", "anon");  
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
+       /* filterChainDefinitionMap.put("/", "anon");
 
-        filterChainDefinitionMap.put("/static/**", "anon"); 
+        filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/blogFile/**", "anon");
-        filterChainDefinitionMap.put("/login", "anon"); 
-        filterChainDefinitionMap.put("/register", "anon"); 
+        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/register", "anon");
         filterChainDefinitionMap.put("/**", "authc"); */
 
         //filterChainDefinitionMap.put("/**/create", "authc");
@@ -44,6 +55,7 @@ public class ShiroConfig {
         //filterChainDefinitionMap.put("/users/currentUser", "authc");
 
         filterChainDefinitionMap.put("/**", "anon");
+        //filterChainDefinitionMap.put("/**", "authc");
 
         //返回json数据，由前端跳转
         shiroFilterFactoryBean.setLoginUrl("/handleLogin");
@@ -60,6 +72,10 @@ public class ShiroConfig {
         return hashedCredentialsMatcher;
     }
 
+    /**
+     * 自定义的Realm
+     * @return AuthorizingRealm
+     */
     @Bean
     public OAuthRealm oAuthRealm() {
         OAuthRealm myShiroRealm = new OAuthRealm();
@@ -73,8 +89,8 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(oAuthRealm);
         securityManager.setSessionManager(sessionManager);
-        // 自定义缓存实现 使用redis  
-        //securityManager.setCacheManager(cacheManager());  
+        // 自定义缓存实现 使用redis
+        //securityManager.setCacheManager(cacheManager());
         return securityManager;
     }
 

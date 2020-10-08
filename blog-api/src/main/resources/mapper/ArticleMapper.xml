@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shimh.dao.ArticleMapper">
+
+    <resultMap id="articleMap" type="com.shimh.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title"         column="title"/>
+        <result property="summary"       column="summary"/>
+        <result property="commentCounts" column="comment_counts"/>
+        <result property="viewCounts"    column="view_counts"/>
+        <result property="createDate"    column="create_date"/>
+        <result property="weight"        column="weight"/>
+        <association property="author"   column="author_id"   javaType="com.shimh.entity.User"         select="findUserById"/>
+        <association property="body"     column="body_id"     javaType="com.shimh.entity.ArticleBody"  select="findBodyById"/>
+        <association property="category" column="category_id" javaType="com.shimh.entity.Category"     select="findCategoryById"/>
+        <collection property="comments"  column="id"          javaType="java.util.List"                select="findComments"  ofType="com.shimh.entity.Comment"/>
+        <collection property="tags"      column="id"          javaType="java.util.List"                select="findTags"      ofType="com.shimh.entity.Tag"/>
+    </resultMap>
+    <select id="findAll" resultMap="articleMap">
+        select * from me_article
+    </select>
+
+
+    <select id="findUserById" resultType="com.shimh.entity.User">
+        select * from sys_user where id = #{author_id}
+    </select>
+    <select id="findBodyById" resultType="com.shimh.entity.ArticleBody">
+        select * from me_article_body where id = #{body_id}
+    </select>
+    <select id="findCategoryById" resultType="com.shimh.entity.Category">
+        select * from me_category where id = #{category_id}
+    </select>
+    <select id="findComments" resultType="com.shimh.entity.Comment">
+        select * from me_comment where article_id = #{id}
+    </select>
+    <select id="findTags" resultType="com.shimh.entity.Tag">
+        SELECT * FROM me_tag WHERE id IN (SELECT tag_id FROM me_article_tag WHERE article_id = #{id})
+    </select>
+</mapper>

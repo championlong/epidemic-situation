@@ -121,7 +121,6 @@ public class ArticleRepositoryImpl implements ArticleWrapper {
             query.setFirstResult(page.getPageSize() * (page.getPageNumber() - 1));
             query.setMaxResults(page.getPageSize());
         }
-        System.out.println("两个参数");
         return query.list();
 
 //        StringBuilder hql = new StringBuilder("select a.* from me_article a ");

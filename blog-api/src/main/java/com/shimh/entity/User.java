@@ -61,7 +61,7 @@ public class User extends BaseEntity<Long> {
 
 
     /**
-     * 加密密码时使用的种子
+     * 加密密码时使用的盐
      */
     private String salt;
 

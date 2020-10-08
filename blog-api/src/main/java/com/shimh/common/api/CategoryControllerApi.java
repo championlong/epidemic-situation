@@ -7,7 +7,6 @@ import com.shimh.common.result.Result;
 import com.shimh.entity.Category;
 import com.shimh.vo.CategoryVO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +19,7 @@ import java.util.List;
 
 /**
  * @author 1159588554@qq.com
- * @date 2020/9/20 21:57
+ * @date 2020/9/22 22:57
  */
 @Api(tags = {"文章分类api"})
 public interface CategoryControllerApi {
@@ -40,7 +39,7 @@ public interface CategoryControllerApi {
     Result saveCategory(Category category);
 
     @ApiOperation("修改文章分类")
-    public Result updateCategory(Category category);
+    Result updateCategory(Category category);
 
     @ApiOperation("删除文章分类")
     Result deleteCategoryById(Integer id);
