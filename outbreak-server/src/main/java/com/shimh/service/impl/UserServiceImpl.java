@@ -1,5 +1,6 @@
 package com.shimh.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -40,15 +41,23 @@ public class UserServiceImpl implements UserService {
         return userRepository.findOne(id);
     }
 
+    /**
+     * 保存注册用户
+     * @param user 注册用户
+     * @return 大于0保存成功其余失败
+     */
     @Override
     @Transactional
     public Long saveUser(User user) {
-
+        //加密密码
         PasswordHelper.encryptPassword(user);
         int index = new Random().nextInt(6) + 1;
+        //头像地址
         String avatar = "/static/user/user_" + index + ".png";
 
         user.setAvatar(avatar);
+        //创建时间
+        user.setCreateDate(new Date());
         return userRepository.save(user).getId();
     }
 

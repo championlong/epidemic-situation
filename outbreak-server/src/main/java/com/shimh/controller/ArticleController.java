@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.shimh.common.annotation.LogAnnotation;
 import com.shimh.common.api.ArticleControllerApi;
+import com.shimh.dao.ArticleMapper;
 import com.shimh.vo.ArticleVo;
 import com.shimh.vo.PageVo;
 import io.swagger.annotations.Api;
@@ -49,6 +50,9 @@ public class ArticleController implements ArticleControllerApi {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private ArticleMapper articleMapper;
+
     @Override
     @GetMapping
     @FastJsonView(
@@ -60,7 +64,8 @@ public class ArticleController implements ArticleControllerApi {
     public Result listArticles(ArticleVo article, PageVo page) {
         System.out.println(article);
         System.out.println(page);
-        List<Article> articles = articleService.listArticles(article, page);
+        //List<Article> articles = articleService.listArticles(article, page);
+        List<Article> articles = articleMapper.findAll();
         return Result.success(articles);
     }
 

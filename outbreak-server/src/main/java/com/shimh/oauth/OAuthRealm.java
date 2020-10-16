@@ -33,6 +33,11 @@ public class OAuthRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
 
+    /**
+     * 授权
+     * @param principals
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String account = (String) principals.getPrimaryPrincipal();
@@ -50,6 +55,12 @@ public class OAuthRealm extends AuthorizingRealm {
         return authorizationInfo;
     }
 
+    /**
+     * 认证
+     * @param token 身份
+     * @return 认证信息
+     * @throws AuthenticationException 认证异常
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
@@ -58,11 +69,13 @@ public class OAuthRealm extends AuthorizingRealm {
         User user = userService.getUserByAccount(account);
 
         if (user == null) {
-            throw new UnknownAccountException();//没找到帐号
+            //没找到帐号
+            throw new UnknownAccountException();
         }
 
         if (UserStatus.blocked.equals(user.getStatus())) {
-            throw new LockedAccountException(); //帐号锁定
+            //帐号锁定
+            throw new LockedAccountException();
         }
 
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(

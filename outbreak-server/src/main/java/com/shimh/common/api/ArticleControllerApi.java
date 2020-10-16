@@ -40,7 +40,6 @@ public interface ArticleControllerApi {
     @ApiOperation("获取最新文章")
     Result listNewArticles();
 
-
     @ApiOperation("根据id获取文章")
     Result getArticleById(Integer id);
 

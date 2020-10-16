@@ -58,6 +58,7 @@ public class LoginController implements LoginControllerApi {
         Result r = new Result();
 
         User temp = userService.getUserByAccount(user.getAccount());
+        //判断用户是否存在
         if (null != temp) {
             r.setResultCode(ResultCode.USER_HAS_EXISTED);
             return r;
@@ -71,6 +72,7 @@ public class LoginController implements LoginControllerApi {
         if (userId > 0) {
             executeLogin(account, password, r);
         } else {
+            //用户注册失败
             r.setResultCode(ResultCode.USER_Register_ERROR);
         }
         return r;
@@ -88,10 +90,13 @@ public class LoginController implements LoginControllerApi {
             subject.getSession().setAttribute(Base.CURRENT_USER, currentUser);
 
             r.setResultCode(ResultCode.SUCCESS);
+            //返回Oauth-Token：sessionId
             r.simple().put(OAuthSessionManager.OAUTH_TOKEN, subject.getSession().getId());
         } catch (UnknownAccountException e) {
+            //没找到帐号
             r.setResultCode(ResultCode.USER_NOT_EXIST);
         } catch (LockedAccountException e) {
+            //帐号锁定
             r.setResultCode(ResultCode.USER_ACCOUNT_FORBIDDEN);
         } catch (AuthenticationException e) {
             r.setResultCode(ResultCode.USER_LOGIN_ERROR);
