@@ -52,25 +52,28 @@
       }
     },
     mounted() {
-      this.als.forEach((ele, index) => {
-        this.$set(this.als, index, Object.assign({}, ele, {status: null}))
-      })
-      // DOM 加载完执行
-      this.$nextTick(() => {
-        this.calculateText()
-
-      })
-
-      window.onresize = () => {
+      this.show()
+    },
+    methods: {
+      show(){
         this.als.forEach((ele, index) => {
           this.$set(this.als, index, Object.assign({}, ele, {status: null}))
         })
-        setTimeout(() => {
+        // DOM 加载完执行
+        this.$nextTick(() => {
           this.calculateText()
-        }, 0)
-      }
-    },
-    methods: {
+
+        })
+
+        window.onresize = () => {
+          this.als.forEach((ele, index) => {
+            this.$set(this.als, index, Object.assign({}, ele, {status: null}))
+          })
+          setTimeout(() => {
+            this.calculateText()
+          }, 0)
+        }
+      },
       // 计算文字 显示展开 收起
       calculateText() {
         // 获取一行文字的height 计算当前文字比较列表文字
@@ -104,6 +107,7 @@
           this.brandFold = false
         }
         this.als.push(...bu)
+        this.show()
       }
     }
   }
