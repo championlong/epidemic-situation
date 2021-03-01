@@ -1,0 +1,22 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/outbreak?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf8
+    username: "root"
+    password: "0410"
+  rabbitmq:
+      host: 192.168.40.131
+      username: admin
+      password: admin
+      virtual-host: /outbreak
+  redis:
+      host: 192.168.40.131
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: outbreak-user #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: Bearer  #JWT负载中拿到开头

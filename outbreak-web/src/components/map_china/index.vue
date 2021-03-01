@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {getChinaList} from '@/api/epidemic'
 import echarts from "echarts";
 import "echarts/map/js/china";
 import "echarts/map/js/province/beijing";
@@ -13,6 +14,7 @@ export default {
   name: "china",
   data() {
     return {
+      chinaList:[],
       options: {
         title:{
           text: '中国疫情地图',
@@ -27,39 +29,6 @@ export default {
           {
             type: "map",
             map: "china",
-            data: [
-              { name: "北京", value: "1" },
-              { name: "云南", value: "11" },
-              { name: "广西", value: "3" },
-              { name: "天津", value: "4" },
-              { name: "内蒙古", value: "3" },
-              { name: "河北", value: "2" },
-              { name: "陕西", value: "26" },
-              { name: "台湾", value: "23" },
-              { name: "江苏", value: "2" },
-              { name: "山东", value: "4" },
-              { name: "河南", value: "4" },
-              { name: "浙江", value: "9" },
-              { name: "上海", value: "41" },
-              { name: "香港", value: "177" },
-              { name: "广东", value: "21" },
-              { name: "四川", value: "28" },
-              { name: "辽宁", value: "6" },
-              { name: "福建", value: "15" },
-              { name: "大兴安岭地区", value: "3" },
-              { name: "黑河市", value: "14" },
-              { name: "齐齐哈尔市", value: "43" },
-              { name: "大庆市", value: "27" },
-              { name: "绥化市", value: "47" },
-              { name: "伊春市", value: "1" },
-              { name: "鹤岗市", value: "5" },
-              { name: "哈尔滨市", value: "264" },
-              { name: "牡丹江市", value: "25" },
-              { name: "鸡西市", value: "46" },
-              { name: "双鸭山市", value: "52" },
-              { name: "佳木斯市", value: "15" },
-              { name: "七台河市", value: "17" },
-            ],
             label: {
               show: true,
               color: "black",
@@ -85,7 +54,7 @@ export default {
           //提示框组件
           show: true,
           trigger: "item",
-          formatter:" 地区：{b}<br/>确诊：{c}", // {a}（系列名称），{b}（区域名称），{c}（合并数值）, {d}（无）
+          formatter:" 地区：{b}<br/>现有确诊：{c}", // {a}（系列名称），{b}（区域名称），{c}（合并数值）, {d}（无）
         },
         visualMap: {
           //视觉映射组件
@@ -106,6 +75,7 @@ export default {
       },
     };
   },
+
   mounted() {
     this.mychinaChart = echarts.init(document.getElementById("chart"));
     var cityArr = [
@@ -182,6 +152,10 @@ export default {
         "taiwan",
       ],
     ];
+    getChinaList().then(data => {
+      this.options.series[0].data = data.data
+      this.mychinaChart.setOption(this.options, true);
+    });
     this.mychinaChart.setOption(this.options, true);
 
     this.mychinaChart.on("click", async (params) => {
@@ -204,6 +178,7 @@ export default {
     }
     });
   },
+
   // watch: {
   //   //观察data的变化
   //   options: {

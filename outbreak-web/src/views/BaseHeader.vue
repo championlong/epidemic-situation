@@ -11,17 +11,15 @@
       <el-col v-if="!simple" :span="16">
         <el-menu :router=true menu-trigger="click" active-text-color="#5FB878" :default-active="activeIndex"
                  mode="horizontal">
-          <el-menu-item index="/">首页</el-menu-item>
-          <el-menu-item index="/log">疫情地图</el-menu-item>
+          <el-menu-item index="/index">首页</el-menu-item>
+          <el-menu-item index="/map">疫情地图</el-menu-item>
+          <el-menu-item index="/dynamic">疫情动态</el-menu-item>
 <!--          <el-menu-item index="/category/all">文章分类</el-menu-item>-->
 <!--          <el-menu-item index="/tag/all">标签</el-menu-item>-->
 <!--          <el-menu-item index="/archives">文章归档</el-menu-item>-->
-          <el-menu-item index="/messageBoard">疫情动态</el-menu-item>
-
 <!--          <el-col :span="4" :offset="4">-->
 <!--            <el-menu-item index="/write"><i class="el-icon-edit"></i>写文章</el-menu-item>-->
 <!--          </el-col>-->
-
         </el-menu>
       </el-col>
 
@@ -32,7 +30,7 @@
       <el-col :span="4">
         <el-menu :router=true menu-trigger="click" mode="horizontal" active-text-color="#5FB878">
 
-          <template v-if="!user.login">
+          <template v-if="user.login">
             <el-menu-item index="/login">
               <el-button type="text">登录</el-button>
             </el-menu-item>
@@ -71,8 +69,8 @@
     },
     computed: {
       user() {
-        let login = this.$store.state.account.length != 0
-        let avatar = this.$store.state.avatar
+        let login = this.$store.state.username.length === 0
+        let avatar = this.$store.state.icon
         return {
           login, avatar
         }
@@ -82,7 +80,7 @@
       logout() {
         let that = this
         this.$store.dispatch('logout').then(() => {
-          this.$router.push({path: '/'})
+          location.reload()
         }).catch((error) => {
           if (error !== 'error') {
             that.$message({message: error, type: 'error', showClose: true});

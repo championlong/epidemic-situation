@@ -6,33 +6,28 @@
 </template>
 
 <script>
-
   import message from '@/components/message'
   import map from '@/components/map_china'
+  import {getTotalData} from '@/api/epidemic'
 
   export default {
     name: 'Index',
     created() {
+      this.tagList()
     },
-    props: {},
     data() {
       return {
         title: "国内疫情",
-        sums: [
-          {name: 'suspected', text: '现有确诊', color: "#FF0000", sum: 376, add: "-2"},
-          {name: 'suspected', text: '无症状感染者', color: "#FF961E", sum: 391, add: "+26"},
-          {name: 'suspected', text: '境外输入', color: "#FFCC00", sum: 2802, add: "+14"},
-          {name: 'confirmed', text: '累计确诊', color: "#F55253", sum: 90966, add: "+15"},
-          {name: 'ok', text: '累计治愈', color: "#178B50", sum: 85844, add: "+17"},
-          {name: 'die', text: '累计死亡', color: "#66666c", sum: 4746, add: "+0"}
-        ],
+        sums: [],
         updateTime:"2020-09-27 09:37",
       }
     },
-    mounted() {
-
-    },
     methods: {
+      async tagList() {
+        const result = await getTotalData()
+        this.sums = result.data.tagList
+        this.updateTime = result.data.date
+      }
     },
     components: {
       'message': message,

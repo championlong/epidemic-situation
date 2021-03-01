@@ -8,8 +8,8 @@
       <h1>登录</h1>
 
       <el-form ref="userForm" :model="userForm" :rules="rules">
-        <el-form-item prop="account">
-          <el-input placeholder="用户名" v-model="userForm.account"></el-input>
+        <el-form-item prop="username">
+          <el-input placeholder="用户名" v-model="userForm.username"></el-input>
         </el-form-item>
 
         <el-form-item prop="password">
@@ -39,11 +39,11 @@
     data() {
       return {
         userForm: {
-          account: '',
-          password: ''
+          username: '',
+          password: '',
         },
         rules: {
-          account: [
+          username: [
             {required: true, message: '请输入用户名', trigger: 'blur'},
             {max: 10, message: '不能大于10个字符', trigger: 'blur'}
           ],
@@ -60,9 +60,8 @@
 
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
             that.$store.dispatch('login', that.userForm).then(() => {
-              that.$router.go(-1)
+              this.$router.push({path: '/'})
             }).catch((error) => {
               if (error !== 'error') {
                 that.$message({message: error, type: 'error', showClose: true});

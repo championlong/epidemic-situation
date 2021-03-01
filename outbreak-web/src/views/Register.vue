@@ -20,18 +20,18 @@
           <el-input placeholder="密码" v-model="userForm.password"></el-input>
         </el-form-item>
 
+        <el-form-item prop="email">
+          <el-input placeholder="邮箱" v-model="userForm.email"></el-input>
+        </el-form-item>
+
+        <el-form-item prop="verify">
+          <el-input placeholder="验证码" v-model="userForm.verify"></el-input>
+        </el-form-item>
+
         <el-form-item size="small" class="me-login-button">
           <el-button type="primary" @click.native.prevent="register('userForm')">注册</el-button>
         </el-form-item>
       </el-form>
-
-      <div class="me-login-design">
-<!--        <p>Designed by-->
-<!--          <strong>-->
-<!--            <router-link to="/" class="me-login-design-color">ForFun</router-link>-->
-<!--          </strong>-->
-<!--        </p>-->
-      </div>
 
     </div>
   </div>
@@ -47,7 +47,9 @@
         userForm: {
           account: '',
           nickname: '',
-          password: ''
+          password: '',
+          email:'',
+          verify:''
         },
         rules: {
           account: [
@@ -61,7 +63,15 @@
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'},
             {max: 10, message: '不能大于10个字符', trigger: 'blur'}
-          ]
+          ],
+          email: [
+            {required: true, message: '请输入邮箱', trigger: 'blur'},
+            {max: 11, message: '不符合格式', trigger: 'blur'}
+          ],
+          verify: [
+            {required: true, message: '请输入验证码', trigger: 'blur'},
+            {max: 4, message: '不符合验证码格式', trigger: 'blur'}
+          ],
         }
 
       }
@@ -71,9 +81,8 @@
         let that = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
             that.$store.dispatch('register', that.userForm).then(() => {
-              that.$message({message: '注册成功 快写文章吧', type: 'success', showClose: true});
+              that.$message({message: '注册成功', type: 'success', showClose: true});
               that.$router.push({path: '/'})
             }).catch((error) => {
               if (error !== 'error') {
@@ -113,7 +122,7 @@
   .me-login-box {
     position: absolute;
     width: 300px;
-    height: 320px;
+    height: 450px;
     background-color: white;
     margin-top: 150px;
     margin-left: -180px;
@@ -131,16 +140,6 @@
     font-size: 24px;
     margin-bottom: 20px;
     vertical-align: middle;
-  }
-
-  .me-login-design {
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 18px;
-  }
-
-  .me-login-design-color {
-    color: #5FB878 !important;
   }
 
   .me-login-button {

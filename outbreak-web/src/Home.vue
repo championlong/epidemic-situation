@@ -1,20 +1,13 @@
 <template>
   <div id="home">
-    <el-container>f
-    	
+    <el-container>
     	<base-header :activeIndex="activeIndex"></base-header>
-		  
 		  <router-view class="me-container"/>
-		  
-<!--			<base-footer v-show="footerShow"></base-footer>-->
-		  
 		</el-container>
   </div>
-  
 </template>
 
 <script>
-// import BaseFooter from '@/components/BaseFooter'
 import BaseHeader from '@/views/BaseHeader'
 
 export default {
@@ -27,7 +20,6 @@ export default {
   },
   components:{
   	'base-header':BaseHeader,
-  	// 'base-footer':BaseFooter
   },
   beforeRouteEnter (to, from, next){
   	 next(vm => {
@@ -47,7 +39,6 @@ export default {
 </script>
 
 <style>
-
 .me-container{
   margin: 100px auto 140px;
 }

@@ -1,12 +1,12 @@
 import request from '@/request'
 
-export function login(account, password) {
+export function login(username, password) {
   const data = {
-    account,
+    username,
     password
   }
   return request({
-    url: '/login',
+    url: '/user/login',
     method: 'post',
     data
   })
@@ -14,21 +14,21 @@ export function login(account, password) {
 
 export function logout() {
   return request({
-    url: '/logout',
-    method: 'get'
+    url: '/user/logout',
+    method: 'post',
   })
 }
 
-export function getUserInfo() {
+export function getInfo() {
   return request({
-    url: '/users/currentUser',
-    method: 'get'
+    url: '/user/info',
+    method: 'get',
   })
 }
 
-export function register(account, nickname, password) {
+export function register(username, nickname, password) {
   const data = {
-    account,
+    username,
     nickname,
     password
   }
