@@ -6,6 +6,7 @@ import com.outbreak.dto.TagDataResult;
 import com.outbreak.dto.TotalDataResult;
 import com.outbreak.entity.TotalData;
 import com.outbreak.service.LocationService;
+import com.outbreak.service.MerchantSerivce;
 import com.outbreak.service.TotalDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -57,7 +57,6 @@
     methods: {
       login(formName) {
         let that = this
-
         this.$refs[formName].validate((valid) => {
           if (valid) {
             that.$store.dispatch('login', that.userForm).then(() => {

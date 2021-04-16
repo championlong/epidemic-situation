@@ -19,7 +19,7 @@
       return {
         title: "国内疫情",
         sums: [],
-        updateTime:"2020-09-27 09:37",
+        updateTime:"",
       }
     },
     methods: {

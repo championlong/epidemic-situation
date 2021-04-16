@@ -3,6 +3,7 @@ package com.outbreak.controller;
 import com.outbreak.common.api.CommonResult;
 import com.outbreak.common.api.ResultCode;
 import com.outbreak.dto.UserLoginParam;
+import com.outbreak.dto.UserRegisterParam;
 import com.outbreak.entity.User;
 import com.outbreak.service.UserService;
 import com.outbreak.utils.JwtTokenUtil;
@@ -36,15 +37,16 @@ public class UserController {
         return CommonResult.success(check);
     }
 
-    @RequestMapping(value = "/code", method = RequestMethod.POST)
+    @RequestMapping(value = "/code", method = RequestMethod.GET)
     public CommonResult verifyCode(@RequestParam("email")String email){
         this.userService.verifyCode(email);
         return CommonResult.success(1);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public CommonResult register(User user, @RequestParam("code")String code){
-        String message = this.userService.register(user, code);
+    public CommonResult register(@RequestBody UserRegisterParam userRegisterParam){
+        String message = this.userService.register(userRegisterParam.getUser(), userRegisterParam.getVerify());
+        System.out.println(userRegisterParam.getUser().toString());
         return CommonResult.success(1,message);
     }
 
@@ -60,6 +62,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public CommonResult login(@RequestBody UserLoginParam userLoginParam){
         String token = userService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
+        System.out.println(token);
         if (token == null) {
             return CommonResult.validateFailed("用户名或密码错误");
         }

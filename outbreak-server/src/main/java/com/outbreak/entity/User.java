@@ -9,8 +9,8 @@ public class User {
 
     private String username;
 
-    @JsonIgnore
     private String password;
+
     private String icon;
 
     private String email;
@@ -19,7 +19,6 @@ public class User {
     private Date created;
     private Date loginTime;
 
-    @JsonIgnore
     private String salt;
 
     public Long getId() {

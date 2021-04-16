@@ -26,14 +26,24 @@ export function getInfo() {
   })
 }
 
-export function register(username, nickname, password) {
+export const getCode = (email) => {
   const data = {
-    username,
-    nickname,
-    password
+      email
   }
   return request({
-    url: '/register',
+    url: '/user/code',
+    method: 'get',
+    params: data
+  })
+}
+
+export function register(user,verify) {
+  const data = {
+    user,
+    verify,
+  }
+  return request({
+    url: '/user/register',
     method: 'post',
     data
   })

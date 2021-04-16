@@ -4,19 +4,29 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/outbreak?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf8
-    username: "root"
-    password: "0410"
+    url: jdbc:mysql://39.103.197.0:3306/outbreak?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf8
+    username: "Steamed"
+    password: "100410"
+#    username: "root"
+#    password: "0410"
   rabbitmq:
-      host: 192.168.40.131
-      username: admin
-      password: admin
+      host: 39.103.197.0
+      username: guest
+      password: guest
+      port: 5672
       virtual-host: /outbreak
+      template:
+        exchange: OUTBREAK.EXCHANGE
   redis:
-      host: 192.168.40.131
+      host: 39.103.197.0
 
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: outbreak-user #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24*7)
   tokenHead: Bearer  #JWT负载中拿到开头
+#
+#mybatis:
+#  mapper-locations:
+#    - classpath:mapper/*.xml
+#    - classpath*:com/**/mapper/*.xml

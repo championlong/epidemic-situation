@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
         }
         String salt = CodecUtils.generateSalt();
         user.setSalt(salt);
+        System.out.println(user.toString());
         user.setPassword(CodecUtils.md5Hex(user.getPassword(), salt));
         user.setCreated(new Date());
         this.userMapper.insertSelective(user);

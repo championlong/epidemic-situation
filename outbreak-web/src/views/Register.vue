@@ -7,13 +7,13 @@
     <div class="me-login-box me-login-box-radius">
       <h1>注册</h1>
 
-      <el-form ref="userForm" :model="userForm" :rules="rules">
-        <el-form-item prop="account">
-          <el-input placeholder="用户名" v-model="userForm.account"></el-input>
+      <el-form :model="userForm" :rules="rules" ref="UserInfoForm">
+        <el-form-item prop="username">
+          <el-input placeholder="用户名" v-model="userForm.username"></el-input>
         </el-form-item>
 
-        <el-form-item prop="nickname">
-          <el-input placeholder="昵称" v-model="userForm.nickname"></el-input>
+        <el-form-item prop="nickName">
+          <el-input placeholder="昵称" v-model="userForm.nickName"></el-input>
         </el-form-item>
 
         <el-form-item prop="password">
@@ -25,7 +25,9 @@
         </el-form-item>
 
         <el-form-item prop="verify">
-          <el-input placeholder="验证码" v-model="userForm.verify"></el-input>
+          <el-input placeholder="验证码" v-model="verify" class="input-with-select">
+            <el-button slot="append" :disabled="show" @click="getCode()">发送验证码</el-button>
+          </el-input>
         </el-form-item>
 
         <el-form-item size="small" class="me-login-button">
@@ -38,25 +40,28 @@
 </template>
 
 <script>
-  import {register} from '@/api/login'
+  import {register,getCode} from '@/api/login'
 
   export default {
     name: 'Register',
     data() {
       return {
         userForm: {
-          account: '',
-          nickname: '',
+          username: '',
+          nickName: '',
           password: '',
           email:'',
-          verify:''
         },
+        show:false,
+        count: "",
+        timer: null,
+        verify:'',
         rules: {
-          account: [
+          username: [
             {required: true, message: '请输入用户名', trigger: 'blur'},
             {max: 10, message: '不能大于10个字符', trigger: 'blur'}
           ],
-          nickname: [
+          nickName: [
             {required: true, message: '请输入昵称', trigger: 'blur'},
             {max: 10, message: '不能大于10个字符', trigger: 'blur'}
           ],
@@ -66,37 +71,51 @@
           ],
           email: [
             {required: true, message: '请输入邮箱', trigger: 'blur'},
-            {max: 11, message: '不符合格式', trigger: 'blur'}
           ],
           verify: [
             {required: true, message: '请输入验证码', trigger: 'blur'},
-            {max: 4, message: '不符合验证码格式', trigger: 'blur'}
+            {max: 6, message: '不符合验证码格式', trigger: 'blur'}
           ],
         }
 
       }
     },
     methods: {
-      register(formName) {
-        let that = this
-        this.$refs[formName].validate((valid) => {
+      async register() {
+        this.$refs.UserInfoForm.validate(async valid => {
           if (valid) {
-            that.$store.dispatch('register', that.userForm).then(() => {
-              that.$message({message: '注册成功', type: 'success', showClose: true});
-              that.$router.push({path: '/'})
-            }).catch((error) => {
-              if (error !== 'error') {
-                that.$message({message: error, type: 'error', showClose: true});
-              }
-            })
-
-          } else {
-            return false;
+            await register(this.userForm, this.verify)
           }
-        });
-
+        })
+      },
+      async getCode() {
+        if (this.checkPhone() == false) {
+          return false;
+        } else {
+          const TIME_COUNT = 60; //更改倒计时时间
+          if (!this.timer) {
+            this.count = TIME_COUNT;
+            this.show = true;
+            this.timer = setInterval(() => {
+              if (this.count > 0 && this.count <= TIME_COUNT) {
+                this.count--;
+              } else {
+                this.show = false;
+                clearInterval(this.timer); // 清除定时器
+                this.timer = null;
+              }
+            }, 1000);
+          }
+        }
+        await getCode(this.userForm.email)
+      },
+      checkPhone() {
+        let email = this.userForm.email;
+        if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(email)) {
+          this.$message.error("请填写正确的邮箱");
+          return false;
+        }
       }
-
     }
   }
 </script>
