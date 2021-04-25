@@ -17,7 +17,8 @@
         </el-form-item>
 
         <el-form-item prop="password">
-          <el-input placeholder="密码" v-model="userForm.password"></el-input>
+          <el-input placeholder="密码" v-model="userForm.password" show-password></el-input>
+
         </el-form-item>
 
         <el-form-item prop="email">
@@ -25,7 +26,7 @@
         </el-form-item>
 
         <el-form-item prop="verify">
-          <el-input placeholder="验证码" v-model="verify" class="input-with-select">
+          <el-input placeholder="验证码" v-model="userForm.verify" class="input-with-select">
             <el-button slot="append" :disabled="show" @click="getCode()">发送验证码</el-button>
           </el-input>
         </el-form-item>
@@ -51,11 +52,11 @@
           nickName: '',
           password: '',
           email:'',
+          verify:'',
         },
         show:false,
         count: "",
         timer: null,
-        verify:'',
         rules: {
           username: [
             {required: true, message: '请输入用户名', trigger: 'blur'},
@@ -82,14 +83,23 @@
     },
     methods: {
       async register() {
-        this.$refs.UserInfoForm.validate(async valid => {
+        this.$refs.UserInfoForm.validate(
+          async valid => {
           if (valid) {
-            await register(this.userForm, this.verify)
+            const result = await register(this.userForm, this.userForm.verify)
+            if(result.message === "合法"){
+              this.$router.push({path: '/'})
+            }else{
+              this.$message({
+                type: 'info',
+                message: result.message
+              });
+            }
           }
         })
       },
       async getCode() {
-        if (this.checkPhone() == false) {
+        if (this.checkEmail() == false) {
           return false;
         } else {
           const TIME_COUNT = 60; //更改倒计时时间
@@ -109,7 +119,7 @@
         }
         await getCode(this.userForm.email)
       },
-      checkPhone() {
+      checkEmail() {
         let email = this.userForm.email;
         if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(email)) {
           this.$message.error("请填写正确的邮箱");

@@ -7,7 +7,7 @@ public class Merchant {
     private double lat;
     private String name;
     private double usableArea;
-    private long maximum;
+    private int maximum;
     private int present;
 
     public int getId() {
@@ -58,14 +58,13 @@ public class Merchant {
         this.usableArea = usableArea;
     }
 
-    public long getMaximum() {
+    public int getMaximum() {
         return maximum;
     }
 
-    public void setMaximum(long maximum) {
+    public void setMaximum(int maximum) {
         this.maximum = maximum;
     }
-
 
     public int getPresent() {
         return present;

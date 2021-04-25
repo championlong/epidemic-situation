@@ -10,22 +10,7 @@ export default {
   data() {
     return {
       socket: null,
-      data_info: [
-        {
-          lat: 45.715629,
-          lng: 126.614659,
-          place: "哈尔滨理工大学",
-          present: 20000,
-          total: 0,
-        },
-        {
-          lat: 45.711475,
-          lng: 126.610687,
-          place: "广来菜馆",
-          present: 0,
-          total: 0,
-        },
-      ],
+      data_info: [],
     };
   },
   watch: {
@@ -166,7 +151,6 @@ export default {
         marker.content = html;
         marker.on("click", markerClick);
       }
-      console.log(htmlAndLnglat + "222");
 
       function markerClick(e) {
         infoWindow.setContent(e.target.content);
@@ -200,7 +184,8 @@ export default {
     },
     websocketonmessage(e) {
       //数据接收
-      this.data_info = e.data;
+
+      this.data_info = JSON.parse(e.data);
       console.log(this.data_info);
     },
     websocketsend(Data) {

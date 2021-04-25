@@ -28,5 +28,4 @@
 <!--        values-->
 <!--        (#{cityName},#{confirmedCount},#{suspectedCount},#{curedCount},#{deadCount},#{provinceName},#{modifyTime})-->
 <!--    </insert>-->
-
-</mapper>
+<!--</mapper>-->

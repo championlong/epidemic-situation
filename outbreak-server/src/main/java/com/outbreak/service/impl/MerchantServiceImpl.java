@@ -51,6 +51,8 @@ public class MerchantServiceImpl implements MerchantSerivce {
                 area = Math.PI * 0.75 * 0.75;
                 people = merchant.getUsableArea()/area;
                 merchantResult.setTotal((int)people);
+            }else {
+                merchantResult.setTotal(merchant.getMaximum());
             }
             merchantResult.setLat(merchant.getLat());
             map.put(merchant.getId(),merchantResult);
