@@ -1,14 +1,8 @@
 package com.outbreak.netty;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.outbreak.dto.MerchantResult;
-import com.outbreak.entity.Merchant;
-import com.outbreak.service.MerchantSerivce;
-import com.outbreak.service.impl.MerchantServiceImpl;
-import com.outbreak.utils.ParseUtils;
-import com.outbreak.utils.SpringUtil;
-import io.netty.channel.Channel;
+import com.outbreak.service.MerchantService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -16,9 +10,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
@@ -37,7 +29,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     @Autowired
-    private MerchantSerivce merchantSerivce;
+    private MerchantService merchantSerivce;
 
     public static ChannelGroup getChannels(){
         return channels;

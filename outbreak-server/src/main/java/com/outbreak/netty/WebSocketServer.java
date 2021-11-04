@@ -36,7 +36,6 @@ public class WebSocketServer implements ApplicationRunner, ApplicationListener<C
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup);
             serverBootstrap.channel(NioServerSocketChannel.class);
-            serverBootstrap.localAddress(new InetSocketAddress("127.0.0.1", 8088));
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel channel) throws Exception {
@@ -69,9 +68,9 @@ public class WebSocketServer implements ApplicationRunner, ApplicationListener<C
                     pipeline.addLast(applicationContext.getBean(ChatHandler.class));
                 }
             });
-            Channel channel = serverBootstrap.bind().sync().channel();
-            this.serverChannel = channel;
-            channel.closeFuture().sync();
+            ChannelFuture future = serverBootstrap.bind(8088).sync();
+            this.serverChannel = future.channel();
+            future.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

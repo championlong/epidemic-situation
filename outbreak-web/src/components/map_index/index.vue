@@ -162,7 +162,7 @@ export default {
     initWebSocket() {
       if (window.WebSocket) {
         //初始化weosocket
-        this.socket = new WebSocket("ws://127.0.0.1:8088/ws");
+        this.socket = new WebSocket("ws://39.103.197.0:8088/ws");
         this.socket.onmessage = this.websocketonmessage;
         this.socket.onopen = this.websocketonopen;
         this.socket.onerror = this.websocketonerror;

@@ -3,12 +3,7 @@ package com.outbreak.service.impl;
 import com.outbreak.dto.MerchantResult;
 import com.outbreak.entity.Merchant;
 import com.outbreak.mapper.MerchantMapper;
-import com.outbreak.service.MerchantSerivce;
-import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import com.outbreak.service.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +12,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class MerchantServiceImpl implements MerchantSerivce {
+public class MerchantServiceImpl implements MerchantService {
 
     private static Map<Integer,MerchantResult> map = new ConcurrentHashMap<>();
-    private static double area;
-    private static double people;
+    private double area;
+    private double people;
 
     public static MerchantResult getMerchantResult(int id){
         return map.get(id);

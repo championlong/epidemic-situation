@@ -5,6 +5,7 @@ import com.outbreak.dto.MerchantResult;
 import com.outbreak.entity.Merchant;
 import com.outbreak.mapper.MerchantMapper;
 import com.outbreak.netty.ChatHandler;
+import com.outbreak.service.MerchantService;
 import com.outbreak.service.impl.MerchantServiceImpl;
 import com.outbreak.utils.MailUtils;
 import io.netty.channel.group.ChannelGroup;
@@ -29,6 +30,9 @@ public class EmailListener {
 
     @Autowired
     private MerchantMapper merchantMapper;
+
+    @Autowired
+    private MerchantService merchantService;
 
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = "OUTBREAK.VERIFY.QUEUE", durable = "true"),
