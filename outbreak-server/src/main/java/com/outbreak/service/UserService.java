@@ -1,7 +1,7 @@
 package com.outbreak.service;
 
 import com.outbreak.entity.User;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 
 public interface UserService {
     Boolean checkUser(String data, int type);

@@ -77,7 +77,7 @@ export default {
           radius: 1000, //半径
           borderWeight: 3,
           strokeColor: "#FF33FF",
-          strokeOpacity: 1,
+          // strokeOpacity: 1,
           strokeWeight: 6,
           strokeOpacity: 0.2,
           fillOpacity: 0.4,
@@ -93,7 +93,7 @@ export default {
 
       //解析定位错误信息
       function onError(data) {
-        alert("定位失败");
+        // alert("定位失败");
       }
 
       var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });
