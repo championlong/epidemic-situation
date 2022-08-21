@@ -5,7 +5,6 @@ import com.outbreak.mapper.MerchantMapper;
 import com.outbreak.service.TimeLineService;
 import com.outbreak.service.TotalDataService;
 import com.outbreak.service.LocationService;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -29,8 +28,6 @@ public class Crawler implements PageProcessor {
     private TotalDataService totalDataService;
     @Autowired
     private TimeLineService timeLineService;
-    @Autowired
-    private AmqpTemplate amqpTemplate;
 
     @Override
     public void process(Page page) {
@@ -48,8 +45,8 @@ public class Crawler implements PageProcessor {
         return site;
     }
 
-//    @Scheduled(cron = "0 0 1 * * ?")
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
+//    @Scheduled(cron = "0 */1 * * * ?")
     public void process(){
         Random random = new Random();
         int nRandomInt = random.nextInt(20);
@@ -57,7 +54,7 @@ public class Crawler implements PageProcessor {
         Map<String, Integer> msg = new HashMap<>();
         msg.put("id",nRandomInt);
         msg.put("people",nYouWant);
-        amqpTemplate.convertAndSend("OUTBREAK.EXCHANGE", "merchant.people", msg);
+//        amqpTemplate.convertAndSend("OUTBREAK.EXCHANGE", "merchant.people", msg);
         String url = "https://ncov.dxy.cn/ncovh5/view/pneumonia";
         Spider.create(this)
                 .addUrl(url)

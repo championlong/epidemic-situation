@@ -93,7 +93,7 @@ export default {
 
       //解析定位错误信息
       function onError(data) {
-        // alert("定位失败");
+        alert("定位失败");
       }
 
       var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });

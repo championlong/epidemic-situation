@@ -4,11 +4,6 @@ import com.outbreak.dto.MerchantResult;
 import com.outbreak.entity.Merchant;
 import com.outbreak.mapper.MerchantMapper;
 import com.outbreak.service.MerchantSerivce;
-import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

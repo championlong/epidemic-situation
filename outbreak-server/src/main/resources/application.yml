@@ -8,15 +8,15 @@ spring:
 #    username: "outbreak"
 #    password: "73ceedJSpjBpbrRy"
     username: "root"
-    password: "100410"
-  rabbitmq:
-      host: 127.0.0.1
-      username: admin
-      password: admin
-      port: 5672
-      virtual-host: /outbreak
-      template:
-        exchange: OUTBREAK.EXCHANGE
+    password: "6671123cl@"
+#  rabbitmq:
+#      host: 127.0.0.1
+#      username: admin
+#      password: admin
+#      port: 5672
+#      virtual-host: /outbreak
+#      template:
+#        exchange: OUTBREAK.EXCHANGE
   redis:
       host: 127.0.0.1
 

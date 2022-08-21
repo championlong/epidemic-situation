@@ -20,7 +20,8 @@ import java.util.List;
 
 @Service
 public class TimeLineServiceImpl implements TimeLineService {
-    private static final String REGEX = "\\[(.*?)\\]";
+    //第1个出现"["的地方，和最后一个出现"]"
+    private static final String REGEX = "\\[(.*)\\]";
 
     @Autowired
     private TimeLineMapper timeLineMapper;

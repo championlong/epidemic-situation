@@ -11,7 +11,7 @@ import java.util.Properties;
  */
 public final class MailUtils {
     private static final String USER = "2412661018@qq.com"; // 发件人称号，同邮箱地址
-    private static final String PASSWORD = "puwrpwvbdszzdifd"; // 如果是qq邮箱可以使户端授权码，或者登录密码
+    private static final String PASSWORD = "iqpibpkncaqpebhb"; // 如果是qq邮箱可以使户端授权码，或者登录密码
 
     /**
      *

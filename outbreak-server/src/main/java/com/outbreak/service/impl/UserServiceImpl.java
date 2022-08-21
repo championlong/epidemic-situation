@@ -1,5 +1,6 @@
 package com.outbreak.service.impl;
 
+import com.outbreak.crawler.EmailListener;
 import com.outbreak.entity.User;
 import com.outbreak.mapper.UserMapper;
 import com.outbreak.service.UserService;
@@ -8,7 +9,6 @@ import com.outbreak.utils.JwtTokenUtil;
 import com.outbreak.utils.NumberUtils;
 import com.outbreak.utils.RegularUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -26,9 +26,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private AmqpTemplate amqpTemplate;
-    @Autowired
     private StringRedisTemplate redisTemplate;
+    @Autowired
+    private EmailListener emailListener;
 
     private static final String KEY_PREFIX = "user:verify:";
     public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
@@ -54,7 +54,8 @@ public class UserServiceImpl implements UserService {
         Map<String, String> msg = new HashMap<>();
         msg.put("email", email);
         msg.put("code", code);
-        amqpTemplate.convertAndSend("OUTBREAK.EXCHANGE", "email.verify", msg);
+        emailListener.EmailListen(email,code);
+//        amqpTemplate.convertAndSend("OUTBREAK.EXCHANGE", "email.verify", msg);
         redisTemplate.opsForValue().set(KEY_PREFIX + email, code, 15, TimeUnit.MINUTES);
     }
 
