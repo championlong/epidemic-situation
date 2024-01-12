@@ -15,7 +15,6 @@ import lodash from 'lodash'
 import '@/assets/icon/iconfont.css'
 
 import {formatTime} from "./utils/time";
-import BaiduMap from 'vue-baidu-map';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
@@ -24,9 +23,6 @@ import 'bootstrap/dist/js/bootstrap.min'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
-Vue.use(BaiduMap, {
-  ak: 'k8FwPDpAMU82EQjFdXy1uGeegXGL00dh'
-})
 
 Object.defineProperty(Vue.prototype, '$_', { value: lodash })
 
